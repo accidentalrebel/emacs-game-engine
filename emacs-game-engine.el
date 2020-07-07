@@ -117,7 +117,7 @@ CHAR is the character to place.
 Coordinates use a starting index of 0.
 
 This is a wrapper function to the coordinate.el function."
-  (when (string= (buffer-name) ege:buffer-name)   ;;TODO; Change this check and read-only unlocking this into it's own function
+  (when (in_game_buffer_p)   ;;TODO; Change this check and read-only unlocking this into it's own function
     (let ((inhibit-read-only t))
       (coordinate-place-char-at col row char attributes))))
 
