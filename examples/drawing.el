@@ -15,5 +15,13 @@
 ;; Initialize the engine with the buffer name and number of cols and rows
 (ege:init "Example Game" 80 24)
 
-(ege:draw_text " Draw rectangle " 1 1 
+(ege:draw_text " Draw rect (8x4) " 1 1 
 	       '(:background "gray" :foreground "black"))
+
+(ege:draw_rect 4 3 8 4 "X")
+
+(ege:draw_rect 15 3 8 4 "X"
+	       '(:foreground "red"))
+
+(ege:draw_rect 26 3 8 4 "X"
+	       '(:background "red"))
