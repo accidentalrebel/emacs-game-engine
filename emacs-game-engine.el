@@ -29,6 +29,7 @@
 (require 'coordinate)
 
 (load-file "ege-draw.el")
+(load-file "ege-canvas.el")
 
 ;; Variables
 ;; =========
@@ -106,7 +107,7 @@ FPS the frames per second."
 Can accept a multiline string.
 
 This is a wrapper function to the coordinate.el function."
-  (when (string= (buffer-name) ege:buffer-name)
+  (when (in-game-buffer-p)
     (let ((inhibit-read-only t))
       (coordinate-place-string-at-area col row str attributes))))
 
@@ -117,7 +118,7 @@ CHAR is the character to place.
 Coordinates use a starting index of 0.
 
 This is a wrapper function to the coordinate.el function."
-  (when (in-game-buffer-p)   ;;TODO; Change this check and read-only unlocking this into it's own function
+  (when (in-game-buffer-p)
     (let ((inhibit-read-only t))
       (coordinate-place-char-at col row char attributes))))
 

@@ -10,15 +10,14 @@
 
 Displays CHAR with optional ATTRIBUTES.
 This is just a wrapper for 'coordinate-place-char-at-area'."
-  (when (string= (buffer-name) ege:buffer-name)
+  (when (in-game-buffer-p)
     (let ((inhibit-read-only t))
       (coordinate-place-char-at-area col row width height char attributes))))
 
 (defun ege:draw-text(str col row &optional attributes)
   "Draws the STR at COL and ROW with optional ATTRIBUTES."
-  (when (string= (buffer-name) ege:buffer-name)
+  (when (in-game-buffer-p)
     (let ((inhibit-read-only t))
-      (coordinate-place-string-at-area col row str attributes)
-      )))
+      (coordinate-place-string-at-area col row str attributes))))
 
 ;;; ege-draw.el ends here
