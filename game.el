@@ -18,6 +18,12 @@
 ;; VARIABLES
 ;; =========
 (setq x-pos 0)
+(setq player-sprite
+      "   o   
+ o x o 
+o xxx o
+ o x o
+   o   ")
 
 ;; HELPERS
 ;; =======
@@ -27,50 +33,60 @@
 ##    
 ##    
 ##    
-######")
+######" '(:background "blue" :foreground "white"))
   (ege:place-string-at-area 8 1 "######
   ##  
   ##  
   ##  
-######")
+######" '(:background "yellow" :foreground "black"))
   (ege:place-string-at-area 15 1 " #####
 ##    
  #### 
     ##
-##### ")
+##### " '(:background "green" :foreground "black"))
   (ege:place-string-at-area 22 1 "##### 
 ##  ##
 ##### 
 ##    
-##    ")
+##    " '(:background "#ff00ff" :foreground "black"))
   (ege:place-string-at-area 32 1 "    ##
     ##
     ##
 ##  ##
- #### ")
+ #### " '(:foreground "red"))
   (ege:place-string-at-area 39 1 "  ##  
  #### 
 ##  ##
 ######
-##  ##")
+##  ##" '(:foreground "green"))
   (ege:place-string-at-area 46 1 "##    ##
 ###  ###
 ## ## ##
 ## ## ##
-##    ##"))
+##    ##" '(:foreground "blue")))
 
 (defun update()
   "Game update function."
-  (ege:clear_buffer) ; Clear the window at the start of the frame
-  (message "here1")
+  ;;(ege:clear_buffer) ; Clear the window at the start of the frame
 
+  (ege:place-string-at-area 10 10 player-sprite)
+  
+  (ege:place-string-at-area x-pos 10 "---
+---
+---
+---
+---")
   (let ((inhibit-read-only t)
 	(x (+ x-pos 1)))
-    (if (>= x ege:buffer-cols)
+    (if (>= x (- ege:buffer-cols 3))
 	(setq x-pos 0)
 	(setq x-pos x))
     (draw_header)
-    (ege:place-char-at x-pos 7 "x")))
+    (ege:place-string-at-area x-pos 10 ">->>--
+->->>-
+-->->>
+->->>-
+>->>--")))
 
 (ege:register_update 'update 24)
 
