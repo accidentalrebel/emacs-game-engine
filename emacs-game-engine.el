@@ -89,8 +89,9 @@ FPS the frames per second."
 (defun ege:clear_buffer ()
   "Clears the buffer and its canvas so it can be rewritten to again."
   (pop-to-buffer ege:buffer-name)
-  (erase-buffer)
-  (coordinate-initialize-view-area ege:buffer-cols ege:buffer-rows "-"))
+  (let ((inhibit-read-only t))
+	(erase-buffer)
+	(coordinate-initialize-view-area ege:buffer-cols ege:buffer-rows "-")))
 
 (provide 'emacs-game-engine)
 ;;; emacs-game-engine.el ends here
