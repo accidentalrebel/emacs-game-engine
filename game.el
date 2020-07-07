@@ -44,17 +44,15 @@
 ###  ###
 ## ## ##
 ## ## ##
-##    ##")
-  )
+##    ##"))
 
 (defun update()
-  (setq x-pos (+ x-pos 1))
+  (ege:clear_window) ; Clear the window at the start of the frame
 
-  (ege:clear_window)
+  (setq x-pos (+ x-pos 1)) ; Move the xposition forward
+
   (draw_header)
-  (coordinate-place-char-at x-pos 7 "x")
-  ;; (message "This is a test"))
-  )
+  (coordinate-place-char-at x-pos 7 "x"))
 
-(run-with-timer 1 1 'update)
-
+;; (run-with-timer 1 1 'update)
+(ege:register_update 'update 2.0)
