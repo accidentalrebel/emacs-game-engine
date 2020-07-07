@@ -40,6 +40,7 @@ BUFFER-NAME is the name of the buffer
 COLS is the number of columns (in characters)
 ROWS is the number of rows (in characters)"
   (pop-to-buffer buffer-name)
+  (erase-buffer)
   (coordinate-initialize-view-area cols rows "-"))
 
 (provide 'emacs-game-engine)
