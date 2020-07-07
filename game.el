@@ -47,7 +47,7 @@
 ##    ##"))
 
 (defun update()
-  (ege:clear_window) ; Clear the window at the start of the frame
+  (ege:clear_buffer) ; Clear the window at the start of the frame
 
   (setq x-pos (+ x-pos 1)) ; Move the xposition forward
 
@@ -55,4 +55,4 @@
   (coordinate-place-char-at x-pos 7 "x"))
 
 ;; (run-with-timer 1 1 'update)
-(ege:register_update 'update 2.0)
+(ege:register_update 'update 2)

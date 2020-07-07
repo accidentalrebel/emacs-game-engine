@@ -29,13 +29,26 @@
 ;; functions for editing the buffer through col and row coordinates.
 (require 'coordinate)
 
+;; Variables
+;; =========
 (defvar ege:buffer-name "Emacs Game Engine" "The name of the game buffer.")
 
 (defvar ege:buffer-cols 0 "The number of columns for the buffer")
 (defvar ege:buffer-rows 0 "The number of rows for the buffer")
 
 (defvar ege:_update-func nil "The update function registered by the game")
+(defvar ege:_update-timer nil "The returned timer function to be used for cancelling the timer.")
 
+;; Modes
+;; =====
+(define-derived-mode ege:ege-mode special-mode "ege-mode")
+(defun ege:setup_control_config ()
+  "Initial config for setting of controls."
+  (local-set-key (kbd "<escape>") 'ege:exit))
+(add-hook 'ege:ege-mode-hook 'ege:setup_control_config)
+
+;; FUNCTIONS
+;; =========
 (defun ege:init (buffer-name cols rows)
   "Initialize the engine and the buffer canvas.
 
@@ -45,9 +58,18 @@ ROWS is the number of rows (in characters)"
   (setq ege:buffer-name buffer-name)
   (setq ege:buffer-cols cols)
   (setq ege:buffer-rows rows)
-  
+
   (pop-to-buffer ege:buffer-name)
-  (ege:clear_window))
+  (ege:ege-mode)
+  (ege:clear_buffer))
+
+(defun ege:exit()
+  "Exits the currently running game.
+Handles the cancelation of update timer and other cleaning up processes."
+  (interactive)
+  (when ege:_update-timer
+    (cancel-timer ege:_update-timer))
+  (message (concat "Game " ege:buffer-name " exited")))
 
 (defun ege:_update()
   "Internal update function used by the engine.
@@ -61,9 +83,10 @@ Handles the calling of an update function if there one is registered."
 FPS the frames per second."
   (setq ege:_update-func update-func)
   (let ((delay (/ 1.0 fps)))
-    (run-with-timer delay delay 'ege:_update)))
+    (setq ege:_update-timer
+	  (run-with-timer delay delay 'ege:_update))))
 
-(defun ege:clear_window ()
+(defun ege:clear_buffer ()
   "Clears the buffer and its canvas so it can be rewritten to again."
   (pop-to-buffer ege:buffer-name)
   (erase-buffer)
@@ -71,3 +94,4 @@ FPS the frames per second."
 
 (provide 'emacs-game-engine)
 ;;; emacs-game-engine.el ends here
+
