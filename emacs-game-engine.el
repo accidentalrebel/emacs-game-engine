@@ -93,6 +93,25 @@ FPS the frames per second."
 	(erase-buffer)
 	(coordinate-initialize-view-area ege:buffer-cols ege:buffer-rows "-")))
 
+(defun ege:place-string-at-area (col row str &optional attributes)
+    "Places at COL and ROW a given STR.
+&optional ATTRIBUTES is the face attribute to use for the string.
+Can accept a multiline string.
+
+This is a wrapper function to the coordinate.el function."
+  (let ((inhibit-read-only t))
+    (coordinate-place-string-at-area col row str attributes)))
+
+(defun ege:place-char-at (col row char &optional attributes)
+  "Place char at COL and ROW coordinates.
+CHAR is the character to place.
+&optional ATTRIBUTES is the face attribute to use for the character.
+Coordinates use a starting index of 0.
+
+This is a wrapper function to the coordinate.el function."
+  (let ((inhibit-read-only t))
+    (coordinate-place-char-at col row char attributes)))
+
 (provide 'emacs-game-engine)
 ;;; emacs-game-engine.el ends here
 
