@@ -5,11 +5,6 @@
 
 ;;; Code:
 
-;; Load the game engine library
-;; If the file is in another direcotry then change it here
-(when (file-exists-p "../../emacs-game-engine.el")
-  (load-file "../../emacs-game-engine.el"))
-
 (require 'emacs-game-engine)
 
 ;; Initialize the engine with the buffer name and number of cols and rows
@@ -25,3 +20,6 @@
 
 (ege:draw-rect 24 3 8 4 "X"
 	       '(:background "red"))
+
+(ege:draw-text " Draw letters " 1 9
+	       '(:background "gray" :foreground "black"))

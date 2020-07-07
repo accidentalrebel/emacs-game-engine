@@ -9,4 +9,5 @@
   "Check if the current buffer is the game buffer."
   (string= (buffer-name) ege:buffer-name))
 
+(provide 'ege-canvas)
 ;;; ege-canvas.el ends here

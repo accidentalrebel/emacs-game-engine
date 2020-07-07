@@ -27,9 +27,8 @@
 ;; Load coordinate.el, a separate library I made that provides convenience
 ;; functions for editing the buffer through col and row coordinates.
 (require 'coordinate)
-
-(load-file "ege-draw.el")
-(load-file "ege-canvas.el")
+(require 'ege-draw)
+(require 'ege-canvas)
 
 ;; Variables
 ;; =========

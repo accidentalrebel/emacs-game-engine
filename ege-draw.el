@@ -20,4 +20,5 @@ This is just a wrapper for 'coordinate-place-char-at-area'."
     (let ((inhibit-read-only t))
       (coordinate-place-string-at-area col row str attributes))))
 
+(provide 'ege-draw)
 ;;; ege-draw.el ends here
