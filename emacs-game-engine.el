@@ -29,12 +29,8 @@
 ;; functions for editing the buffer through col and row coordinates.
 (require 'coordinate)
 
-(defun ege:init ()
-  "Initialize the engine."
-  (message "Emacs game engine initialized"))
-
-(defun ege:init_buffer (buffer-name cols rows)
-  "Initialize the buffer to use for the game.
+(defun ege:init (buffer-name cols rows)
+  "Initialize the engine and the buffer canvas.
 
 BUFFER-NAME is the name of the buffer
 COLS is the number of columns (in characters)

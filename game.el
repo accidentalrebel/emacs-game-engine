@@ -5,8 +5,7 @@
 
 (require 'emacs-game-engine)
 
-(ege:init)
-(ege:init_buffer "Example Game" 80 24)
+(ege:init "Example Game" 80 24)
 
 (coordinate-place-string-at-area 1 1 "##    
 ##    
