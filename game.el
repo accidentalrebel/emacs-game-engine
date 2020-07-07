@@ -76,8 +76,7 @@ o xxx o
 ---
 ---
 ---")
-  (let ((inhibit-read-only t)
-	(x (+ x-pos 1)))
+  (let ((x (+ x-pos 1)))
     (if (>= x (- ege:buffer-cols 3))
 	(setq x-pos 0)
 	(setq x-pos x))

@@ -18,10 +18,10 @@
 (ege:draw-text " Draw rect (8x4) " 1 1 
 	       '(:background "gray" :foreground "black"))
 
-(ege:draw-rect 4 3 8 4 "X")
+(ege:draw-rect 2 3 8 4 "X")
 
-(ege:draw-rect 15 3 8 4 "X"
+(ege:draw-rect 13 3 8 4 "X"
 	       '(:foreground "red"))
 
-(ege:draw-rect 26 3 8 4 "X"
+(ege:draw-rect 24 3 8 4 "X"
 	       '(:background "red"))
