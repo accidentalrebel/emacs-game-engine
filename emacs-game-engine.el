@@ -41,10 +41,14 @@
 
 ;; Modes
 ;; =====
+;; Note: Since ege:ege-mode is derived from special-mode. The buffer is read-only.
+;;       To write to the buffer, "inhibit-read-only" must be set to "t".
 (define-derived-mode ege:ege-mode special-mode "ege-mode")
+
 (defun ege:setup_control_config ()
   "Initial config for setting of controls."
   (local-set-key (kbd "<escape>") 'ege:exit))
+
 (add-hook 'ege:ege-mode-hook 'ege:setup_control_config)
 
 ;; FUNCTIONS
