@@ -46,11 +46,11 @@
 ;;       To write to the buffer, "inhibit-read-only" must be set to "t".
 (define-derived-mode ege:ege-mode special-mode "ege-mode")
 
-(defun ege:setup_control_config ()
+(defun ege:setup-control-config ()
   "Initial config for setting of controls."
   (local-set-key (kbd "<escape>") 'ege:exit))
 
-(add-hook 'ege:ege-mode-hook 'ege:setup_control_config)
+(add-hook 'ege:ege-mode-hook 'ege:setup-control-config)
 
 ;; FUNCTIONS
 ;; =========
@@ -66,7 +66,7 @@ ROWS is the number of rows (in characters)"
 
   (pop-to-buffer ege:buffer-name)
   (ege:ege-mode)
-  (ege:clear_buffer))
+  (ege:clear-buffer))
 
 (defun ege:exit()
   "Exits the currently running game.
@@ -84,7 +84,7 @@ Handles the calling of an update function if there one is registered."
 	   (string= (buffer-name) ege:buffer-name))
     (funcall ege:_update-func)))
 
-(defun ege:register_update (update-func fps)
+(defun ege:register-update (update-func fps)
   "Registers an update function UPDATE-FUNC as a game loop.
 
 FPS the frames per second."
@@ -93,7 +93,7 @@ FPS the frames per second."
     (setq ege:_update-timer
 	  (run-with-timer delay delay 'ege:_update))))
 
-(defun ege:clear_buffer ()
+(defun ege:clear-buffer ()
   "Clears the buffer and its canvas so it can be rewritten to again."
   (pop-to-buffer ege:buffer-name)
   (let ((inhibit-read-only t))
@@ -117,7 +117,7 @@ CHAR is the character to place.
 Coordinates use a starting index of 0.
 
 This is a wrapper function to the coordinate.el function."
-  (when (in_game_buffer_p)   ;;TODO; Change this check and read-only unlocking this into it's own function
+  (when (in-game-buffer-p)   ;;TODO; Change this check and read-only unlocking this into it's own function
     (let ((inhibit-read-only t))
       (coordinate-place-char-at col row char attributes))))
 

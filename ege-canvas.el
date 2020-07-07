@@ -5,7 +5,7 @@
 
 ;;; Code:
 
-(defun in_game_buffer_p ()
+(defun in-game-buffer-p ()
   "Check if the current buffer is the game buffer."
   (string= (buffer-name) ege:buffer-name))
 

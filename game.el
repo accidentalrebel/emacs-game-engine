@@ -27,7 +27,7 @@ o xxx o
 
 ;; HELPERS
 ;; =======
-(defun draw_header()
+(defun draw-header()
   "Draw the header texts."
   (ege:place-string-at-area 1 1 "##    
 ##    
@@ -67,7 +67,7 @@ o xxx o
 
 (defun update()
   "Game update function."
-  ;;(ege:clear_buffer) ; Clear the window at the start of the frame
+  ;;(ege:clear-buffer) ; Clear the window at the start of the frame
 
   (ege:place-string-at-area 10 10 player-sprite)
   
@@ -89,9 +89,9 @@ o xxx o
 
 ;; INITIALIZATION
 ;; ==============
-(draw_header)
-(ege:draw_rect 56 1 22 5 "x");
+(draw-header)
+(ege:draw-rect 56 1 22 5 "x");
 
-(ege:register_update 'update 24)
+(ege:register-update 'update 24)
 
 ;;; game.el ends here
