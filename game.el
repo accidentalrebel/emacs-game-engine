@@ -81,12 +81,16 @@ o xxx o
     (if (>= x (- ege:buffer-cols 3))
 	(setq x-pos 0)
 	(setq x-pos x))
-    (draw_header)
     (ege:place-string-at-area x-pos 10 ">->>--
 ->->>-
 -->->>
 ->->>-
 >->>--")))
+
+;; INITIALIZATION
+;; ==============
+(draw_header)
+(ege:draw_rect 56 1 22 5 "x");
 
 (ege:register_update 'update 24)
 
