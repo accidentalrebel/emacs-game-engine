@@ -50,10 +50,13 @@
   (ege:clear_buffer) ; Clear the window at the start of the frame
   (message "here1")
 
-  (let ((inhibit-read-only t))
-	(setq x-pos (+ x-pos 1)) ; Move the xposition forward
-	(draw_header)
-	(ege:place-char-at x-pos 7 "x")))
+  (let ((inhibit-read-only t)
+	(x (+ x-pos 1)))
+    (if (>= x ege:buffer-cols)
+	(setq x-pos 0)
+	(setq x-pos x))
+    (draw_header)
+    (ege:place-char-at x-pos 7 "x")))
 
 ;; (run-with-timer 1 1 'update)
-(ege:register_update 'update 2)
+(ege:register_update 'update 24)
