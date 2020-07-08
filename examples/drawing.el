@@ -31,3 +31,5 @@
 
 (ege:draw-text " Draw letters " 1 9
 	       '(:background "gray" :foreground "black"))
+
+(ege:draw-letter 2 11 ege:key-l "L")

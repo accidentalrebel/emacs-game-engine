@@ -5,6 +5,22 @@
 
 ;;; Code:
 
+(defvar ege:key-l
+"##    
+##    
+##    
+##    
+######")
+
+(defun ege:draw-letter(col row letter char &optional attributes)
+  (when (in-game-buffer-p)
+    (let ((inhibit-read-only t))
+      (coordinate-place-string-at-area col row
+				       (subst-char-in-string ?#
+							     (string-to-char char)
+							     letter)
+				       attributes))))
+
 (defun ege:draw-rect(col row width height char &optional attributes)
   "Draw a rectangle at COL and ROW with WIDTH and HEIGHT.
 
