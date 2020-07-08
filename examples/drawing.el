@@ -21,5 +21,13 @@
 (ege:draw-rect 24 3 8 4 "X"
 	       '(:background "red"))
 
+(ege:draw-border 38 3 8 4 "X")
+
+(ege:draw-border 49 3 8 4 "X"
+	       '(:foreground "red"))
+
+(ege:draw-border 60 3 8 4 "X"
+	       '(:background "red"))
+
 (ege:draw-text " Draw letters " 1 9
 	       '(:background "gray" :foreground "black"))

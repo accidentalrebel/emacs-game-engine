@@ -14,6 +14,14 @@ This is just a wrapper for 'coordinate-place-char-at-area'."
     (let ((inhibit-read-only t))
       (coordinate-place-char-at-area col row width height char attributes))))
 
+(defun ege:draw-border(col row width height char &optional attributes)
+  "Draw a rectangle at COL and ROW with WIDTH and HEIGHT.
+
+Displays CHAR with optional ATTRIBUTES."
+  (when (in-game-buffer-p)
+    (let ((inhibit-read-only t))
+      (coordinate-place-char-as-border col row width height char attributes))))
+
 (defun ege:draw-text(str col row &optional attributes)
   "Draws the STR at COL and ROW with optional ATTRIBUTES."
   (when (in-game-buffer-p)
