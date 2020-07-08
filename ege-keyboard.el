@@ -5,7 +5,7 @@
 
 ;;; Code:
 
-(defvar ege:last-key-pressed nil)
+(defvar ege:key-pressed nil)
 
 (defmacro ege:_set-key (key)
   "Macro for easy setting up of KEY in ege:setup-control-config."
@@ -27,12 +27,12 @@
 
 (defun ege:_keyboard-late-update ()
   "Late update function for the keyboard."
-  (setq ege:last-key-pressed nil)
+  (setq ege:key-pressed nil)
   )
 
 (defun ege:_on-key-pressed (key)
   "Internal function that is called when a KEY is pressed."
-  (setq ege:last-key-pressed key)
+  (setq ege:key-pressed key)
   )
 
 (provide 'ege-keyboard)
