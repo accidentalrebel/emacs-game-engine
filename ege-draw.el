@@ -73,5 +73,11 @@ Displays CHAR with optional ATTRIBUTES."
     (let ((inhibit-read-only t))
       (coordinate-place-string-at-area col row str attributes))))
 
+(defun ege:draw-char(char col row &optional attributes)
+  "Draws the CHAR at COL and ROW with optional ATTRIBUTES."
+  (when (in-game-buffer-p)
+    (let ((inhibit-read-only t))
+      (coordinate-place-char-at col row char attributes))))
+
 (provide 'ege-draw)
 ;;; ege-draw.el ends here
