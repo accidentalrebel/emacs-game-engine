@@ -13,6 +13,9 @@
 (defun update()
   "Game update function."
 
+  (when ege:last-key-pressed 
+    (message (concat "PRESSED: " ege:last-key-pressed)))
+
   (message "Hello");
   )
 

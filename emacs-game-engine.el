@@ -74,11 +74,11 @@ Handles the cancelation of update timer and other cleaning up processes."
 (defun ege:_update()
   "Internal update function used by the engine.
 Handles the calling of an update function if there one is registered."
-  (ege:_keyboard-update)
   (when
       (and ege:_update-func
 	   (string= (buffer-name) ege:buffer-name))
-    (funcall ege:_update-func)))
+    (funcall ege:_update-func))
+  (ege:_keyboard-late-update))
 
 (defun ege:register-update (update-func fps)
   "Registers an update function UPDATE-FUNC as a game loop.

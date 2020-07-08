@@ -5,6 +5,8 @@
 
 ;;; Code:
 
+(defvar ege:last-key-pressed nil)
+
 (defmacro ege:_set-key (key)
   "Macro for easy setting up of KEY in ege:setup-control-config."
   `(local-set-key (kbd ,key) '(lambda () (interactive) (ege:_on-key-pressed ,key))))
@@ -23,14 +25,14 @@
 
 (add-hook 'ege:ege-mode-hook 'ege:setup-control-config)
 
-(defun ege:_keyboard-update ()
-  "Update function for the keyboard."
-  
+(defun ege:_keyboard-late-update ()
+  "Late update function for the keyboard."
+  (setq ege:last-key-pressed nil)
   )
 
 (defun ege:_on-key-pressed (key)
   "Internal function that is called when a KEY is pressed."
-  (message (concat "PRESSED: " key))
+  (setq ege:last-key-pressed key)
   )
 
 (provide 'ege-keyboard)
