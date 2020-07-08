@@ -29,6 +29,7 @@
 (require 'coordinate)
 (require 'ege-draw)
 (require 'ege-canvas)
+(require 'ege-keyboard)
 
 ;; Variables
 ;; =========
@@ -45,12 +46,6 @@
 ;; Note: Since ege:ege-mode is derived from special-mode. The buffer is read-only.
 ;;       To write to the buffer, "inhibit-read-only" must be set to "t".
 (define-derived-mode ege:ege-mode special-mode "ege-mode")
-
-(defun ege:setup-control-config ()
-  "Initial config for setting of controls."
-  (local-set-key (kbd "<escape>") 'ege:exit))
-
-(add-hook 'ege:ege-mode-hook 'ege:setup-control-config)
 
 ;; FUNCTIONS
 ;; =========
@@ -79,6 +74,7 @@ Handles the cancelation of update timer and other cleaning up processes."
 (defun ege:_update()
   "Internal update function used by the engine.
 Handles the calling of an update function if there one is registered."
+  (ege:_keyboard-update)
   (when
       (and ege:_update-func
 	   (string= (buffer-name) ege:buffer-name))

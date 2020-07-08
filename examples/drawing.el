@@ -40,3 +40,4 @@
 		 '(:foreground "blue"))
 (ege:draw-letter 26 11 ege:key-p "P"
 		 '(:foreground "#ff00ff"))
+
