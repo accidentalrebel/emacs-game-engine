@@ -5,12 +5,41 @@
 
 ;;; Code:
 
-(defvar ege:key-l
-"##    
+(defvar ege:key-a "  ##  
+ #### 
+##  ##
+######
+##  ##")
+(defvar ege:key-i "######
+  ##  
+  ##  
+  ##  
+######")
+(defvar ege:key-j "    ##
+    ##
+    ##
+##  ##
+ #### ")
+(defvar ege:key-l "##    
 ##    
 ##    
 ##    
 ######")
+(defvar ege:key-m "##    ##
+###  ###
+## ## ##
+## ## ##
+##    ##")
+(defvar ege:key-p "##### 
+##  ##
+##### 
+##    
+##    ")
+(defvar ege:key-s " #####
+##    
+ #### 
+    ##
+##### ")
 
 (defun ege:draw-letter(col row letter char &optional attributes)
   (when (in-game-buffer-p)

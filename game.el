@@ -29,41 +29,13 @@ o xxx o
 ;; =======
 (defun draw-header()
   "Draw the header texts."
-  (ege:place-string-at-area 1 1 "##    
-##    
-##    
-##    
-######" '(:background "blue" :foreground "white"))
-  (ege:place-string-at-area 8 1 "######
-  ##  
-  ##  
-  ##  
-######" '(:background "yellow" :foreground "black"))
-  (ege:place-string-at-area 15 1 " #####
-##    
- #### 
-    ##
-##### " '(:background "green" :foreground "black"))
-  (ege:place-string-at-area 22 1 "##### 
-##  ##
-##### 
-##    
-##    " '(:background "#ff00ff" :foreground "black"))
-  (ege:place-string-at-area 32 1 "    ##
-    ##
-    ##
-##  ##
- #### " '(:foreground "red"))
-  (ege:place-string-at-area 39 1 "  ##  
- #### 
-##  ##
-######
-##  ##" '(:foreground "green"))
-  (ege:place-string-at-area 46 1 "##    ##
-###  ###
-## ## ##
-## ## ##
-##    ##" '(:foreground "blue")))
+  (ege:draw-letter 1 1 ege:key-l "X" '(:background "blue" :foreground "white"))
+  (ege:draw-letter 8 1 ege:key-i "X" '(:background "yellow" :foreground "black"))
+  (ege:draw-letter 15 1 ege:key-s "X" '(:background "green" :foreground "black"))
+  (ege:draw-letter 22 1 ege:key-p "X" '(:background "#ff00ff" :foreground "black"))
+  (ege:draw-letter 32 1 ege:key-j "X" '(:foreground "red"))
+  (ege:draw-letter 39 1 ege:key-a "X" '(:foreground "green"))
+  (ege:draw-letter 46 1 ege:key-m "X" '(:foreground "blue")))
 
 (defun update()
   "Game update function."
