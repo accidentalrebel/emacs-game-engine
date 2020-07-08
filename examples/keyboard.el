@@ -22,33 +22,39 @@
 (defun update()
   "Game update function."
 
-  (when ege:key-pressed
-
-    (ege:draw-rect 21 3 8 1 "-")
-    (ege:draw-text (concat " " ege:key-pressed " ")
-		   21 3
-		   '(:background "red" :foreground "white"))
-		   
-    (ege:draw-char "*" player-pos-x player-pos-y)
-    
-    (cond ((or (string= ege:key-pressed "s")
-	       (string= ege:key-pressed "<down>"))
-	   (setq player-pos-y
-		 (+ player-pos-y 1)))
-	  ((or (string= ege:key-pressed "w")
-	       (string= ege:key-pressed "<up>"))
-	   (setq player-pos-y
-		 (- player-pos-y 1))))
-    (cond ((or (string= ege:key-pressed "d")
-	       (string= ege:key-pressed "<right>"))
-	   (setq player-pos-x
-		 (+ player-pos-x 1)))
-	  ((or (string= ege:key-pressed "a")
-	       (string= ege:key-pressed "<left>"))
-	   (setq player-pos-x
-		 (- player-pos-x 1))))
+  (if ege:key-pressed
+      (progn
+	(ege:draw-text " yes " 23 1
+		       '(:background "red" :foreground "white"))
+	
+	(ege:draw-rect 21 3 10 1 "-")
+	(ege:draw-text (concat " " ege:key-pressed " ")
+		       21 3
+		       '(:background "red" :foreground "white"))
+	
+	(ege:draw-char "*" player-pos-x player-pos-y)
+	
+	(cond ((or (string= ege:key-pressed "s")
+		   (string= ege:key-pressed "<down>"))
+	       (setq player-pos-y
+		     (+ player-pos-y 1)))
+	      ((or (string= ege:key-pressed "w")
+		   (string= ege:key-pressed "<up>"))
+	       (setq player-pos-y
+		     (- player-pos-y 1))))
+	(cond ((or (string= ege:key-pressed "d")
+		   (string= ege:key-pressed "<right>"))
+	       (setq player-pos-x
+		     (+ player-pos-x 1)))
+	      ((or (string= ege:key-pressed "a")
+		   (string= ege:key-pressed "<left>"))
+	       (setq player-pos-x
+		     (- player-pos-x 1)))))
+    (progn
+      (ege:draw-text " no " 23 1
+		     '(:background "red" :foreground "white"))
+      ))
 
     (ege:draw-char "@" player-pos-x player-pos-y))
-  )
 
 (ege:register-update 'update 24)
