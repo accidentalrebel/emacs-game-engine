@@ -30,6 +30,7 @@
 (require 'ege-draw)
 (require 'ege-canvas)
 (require 'ege-keyboard)
+(require 'ege-audio)
 
 ;; Variables
 ;; =========

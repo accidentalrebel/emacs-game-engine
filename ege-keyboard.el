@@ -1,4 +1,4 @@
-;;; ege-canvas.el --- Emacs Game Engine    -*- lexical-binding: t -*-
+;;; ege-keyboard.el --- Emacs Game Engine    -*- lexical-binding: t -*-
 
 ;;; Commentary:
 ;; 
