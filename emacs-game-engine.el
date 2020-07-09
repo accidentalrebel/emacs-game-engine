@@ -31,6 +31,7 @@
 (require 'ege-canvas)
 (require 'ege-keyboard)
 (require 'ege-audio)
+(require 'ege-mouse)
 
 ;; Variables
 ;; =========
@@ -62,6 +63,7 @@ ROWS is the number of rows (in characters)"
 
   (pop-to-buffer ege:buffer-name)
   (ege:ege-mode)
+  (ege:mouse-init)
   (ege:clear-buffer))
 
 (defun ege:exit()
