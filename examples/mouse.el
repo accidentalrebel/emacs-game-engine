@@ -14,9 +14,9 @@
 (setq clicked-count 0)
 
 (defun update-clicked-count()
-  (ege:draw-text (concat " Clicked count: " (number-to-string clicked-count) " ")
-		 13 6
-		 '(:background "gray" :foreground "black"))
+  (ege:draw-text (concat " " (number-to-string clicked-count) " ")
+		 29 6
+		 '(:background "red" :foreground "white"))
   (let ((mouse-pressed (if ege:mouse-pressed
 			   ege:mouse-pressed
 			 0)))
@@ -43,6 +43,9 @@
 	       '(:background "gray" :foreground "black"))
 
 (ege:draw-text " Last pressed mouse button: " 2 3
+	       '(:background "gray" :foreground "black"))
+
+(ege:draw-text " Clicked count: " 13 6
 	       '(:background "gray" :foreground "black"))
 
 (ege:draw-button " > BUTTON " button-rect " " nil
