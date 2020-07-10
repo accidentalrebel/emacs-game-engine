@@ -79,17 +79,23 @@ Displays CHAR with optional ATTRIBUTES."
     (let ((inhibit-read-only t))
       (coordinate-place-char-at col row char attributes))))
 
-(defun ege:draw-button(str rect border-char bg-char &optional attributes)
+(defun ege:draw-button(str rect bg-char border-char &optional attributes)
   "A convenience function that draws a button.
 Draws a button with STR as text and RECT as dimensions.
-BORDER-CHAR for drawing the border.
+
 BG-CHAR for the character for the background.
+
+BORDER-CHAR for drawing the border.
+If BORDER-CHAR is nil, don't show a border.
+
 Uses ATTRIBUTES on the button rectangle including the text.
 Uses the other draw functions."
   (let ((col (nth 0 rect))
 	(row (nth 1 rect))
 	(width (nth 2 rect))
 	(height (nth 3 rect)))
+    (when border-char
+      (ege:draw-border col row width height border-char attributes))
     (ege:draw-rect col row width height bg-char attributes)
     (ege:draw-text str col row attributes))
   )
