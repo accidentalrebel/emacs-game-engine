@@ -9,3 +9,8 @@
 
 ;; Initialize the engine with the buffer name and number of cols and rows
 (ege:init "Example Game" 80 24)
+
+(setq button-pos '(2 2 8 1))
+
+(ege:draw-button " > ON " button-pos "=" " "
+		 '(:background "orange" :foreground "black"))

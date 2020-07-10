@@ -20,8 +20,7 @@
   (message "Clicked")
   (let ((pos (ege:mouse-position)))
     (message (concat "Pos " (number-to-string (car pos)) ", " (number-to-string (cdr pos))))
-    (coordinate-position-point-at (car pos) (cdr pos)))
-  )
+    (coordinate-position-point-at (car pos) (cdr pos))))
 
 (defun ege:mouse-position ()
   (cdr (mouse-position)))
