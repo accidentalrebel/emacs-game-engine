@@ -29,8 +29,9 @@
   )
 
 (defun update()
-  (when (ege:point-in-rect-p
-  	 (ege:mouse-position) button-rect)
+  (when (and (eql ege:mouse-pressed 1)
+	     (ege:point-in-rect-p (ege:mouse-position)
+				  button-rect))
     (message "BUTTON CLICKED")
     )
   )

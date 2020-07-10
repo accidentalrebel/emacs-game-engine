@@ -82,7 +82,8 @@ Handles the calling of an update function if there one is registered."
       (and ege:_update-func
 	   (string= (buffer-name) ege:buffer-name))
     (funcall ege:_update-func))
-  (ege:_keyboard-late-update))
+  (ege:_keyboard-late-update)
+  (ege:_mouse-late-update))
 
 (defun ege:register-update (update-func fps)
   "Registers an update function UPDATE-FUNC as a game loop.
