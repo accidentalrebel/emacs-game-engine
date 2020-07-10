@@ -32,6 +32,7 @@
 (require 'ege-keyboard)
 (require 'ege-audio)
 (require 'ege-mouse)
+(require 'ege-utils)
 
 ;; Variables
 ;; =========
