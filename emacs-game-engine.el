@@ -62,6 +62,7 @@ ROWS is the number of rows (in characters)"
   (setq ege:buffer-rows rows)
 
   (pop-to-buffer ege:buffer-name)
+  (delete-other-windows)
   (ege:ege-mode)
   (ege:mouse-init)
   (ege:clear-buffer))
