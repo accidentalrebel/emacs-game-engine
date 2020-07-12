@@ -76,6 +76,10 @@ From that position copies the characters up to COUNT."
     )
   )
 
+(defun rog:can-player-move (col row)
+  (not (string= (coordinate-get-char-at col row)					
+		"#")))
+
 (defun rog:update()
   "Game update function."
 
@@ -85,16 +89,24 @@ From that position copies the characters up to COUNT."
 		 rog:player-pos-y)
 
   ;; Check if any key was pressend and move the player
-  (cond ((string= ege:key-pressed "<down>")
+  (cond ((and (string= ege:key-pressed "<down>")
+	      (rog:can-player-move rog:player-pos-x
+				   (+ rog:player-pos-y 1)))
 	 (setq rog:player-pos-y
 	       (+ rog:player-pos-y 1)))
-	((string= ege:key-pressed "<up>")
+	((and (string= ege:key-pressed "<up>")
+	      (rog:can-player-move rog:player-pos-x
+				   (- rog:player-pos-y 1)))
 	 (setq rog:player-pos-y
 	       (- rog:player-pos-y 1))))
-  (cond ((string= ege:key-pressed "<right>")
+  (cond ((and (string= ege:key-pressed "<right>")
+	      (rog:can-player-move (+ rog:player-pos-x 1)
+				   rog:player-pos-y))
 	 (setq rog:player-pos-x
 	       (+ rog:player-pos-x 1)))
-	((string= ege:key-pressed "<left>")
+	((and (string= ege:key-pressed "<left>")
+	      (rog:can-player-move (- rog:player-pos-x 1)
+				   rog:player-pos-y))
 	 (setq rog:player-pos-x
 	       (- rog:player-pos-x 1))))
 
@@ -103,6 +115,9 @@ From that position copies the characters up to COUNT."
 		 rog:player-pos-x
 		 rog:player-pos-y
 		 '(:foreground "green"))
+
+  ;; Move the cursor away
+  (coordinate-position-point-at 0 0)
   )
 
 ;; INITIALIZATION
@@ -161,4 +176,4 @@ From that position copies the characters up to COUNT."
 		    (nth 2 rog:map-viewport)
 		    (nth 3 rog:map-viewport)))
 
-(ege:register-update 'rog:update 24)
+(ege:register-update 'rog:update 10)

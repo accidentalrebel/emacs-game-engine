@@ -21,7 +21,6 @@ RECT is a 4 element list with (col row width height)."
 	 (>= point-y row)
 	 (<= point-y (+ row height)))))
 
-
 (defun ege:rect-pressed-p (rect mouse-button-number)
   "Check if mouse is pressing over RECT.
 Pressed mouse button is compared to MOUSE-BUTTON-NUMBER."
