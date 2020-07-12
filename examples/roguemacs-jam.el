@@ -74,6 +74,10 @@ From that position copies the characters up to COUNT."
     )
   )
 
+;; INITIALIZATION
+;; ==============
+
+;; Draw background
 (ege:draw-rect 0 0 80 24 "-"
 	       '(:background "#11" :foreground "#666"))
 
@@ -82,7 +86,7 @@ From that position copies the characters up to COUNT."
 (ege:draw-text " -Version 0.1- " 16 2
 	       '(:background "#2222AA" :foreground "#ffffff"))
 
-;; Viewport border
+;; Draw viewport border
 (ege:draw-border (- (nth 0 rog:map-viewport) 1)
 		 (- (nth 1 rog:map-viewport) 1)
 		 (+ (nth 2 rog:map-viewport) 2)
@@ -90,12 +94,7 @@ From that position copies the characters up to COUNT."
 		 "="
 		 '(:background "#222266" :foreground "#8888AA"))
 
-;; Message border
-(ege:draw-rect 50 9 26 12 " ")
-(ege:draw-border 50 9 26 12 "="
-		 '(:background "#222266" :foreground "#8888AA"))
-
-;; Player border
+;; Draw player details and border
 (ege:draw-rect 52 4 22 6 " ")
 (ege:draw-border 52 4 22 6 "="
 		 '(:background "#222266" :foreground "#8888AA"))
@@ -111,6 +110,12 @@ From that position copies the characters up to COUNT."
 (ege:draw-text (concat "Gold: " (number-to-string 0))
 	       54 8)
 
+;; Draw messaging border
+(ege:draw-rect 50 9 26 12 " ")
+(ege:draw-border 50 9 26 12 "="
+		 '(:background "#222266" :foreground "#8888AA"))
+
+;; Draw messaging sample text
 (ege:draw-text "> You have awaken..."
 	       51 10)
 
@@ -123,5 +128,5 @@ From that position copies the characters up to COUNT."
 		    (nth 3 rog:map-viewport)))
 
 ;; Draw player 
-(ege:draw-char "@" 8 8)
-
+(ege:draw-char "@" 8 8
+	       '(:foreground "green"))
