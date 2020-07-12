@@ -10,8 +10,7 @@
 (require 'emacs-game-engine)
 
 ;; Initialize the engine with the buffer name and number of cols and rows
-;; (ege:init "Example Game" 80 24)
-
+(ege:init "Example Game" 80 24)
 
 (defvar rog:map
 "################################################################################
@@ -42,12 +41,17 @@ From that position copies the characters up to COUNT."
   )
 
 (defun rog:draw-map (draw-position copy-rect)
-  (let ((copy-col (nth 0 copy-rect))
+  (let ((draw-col (nth 0 draw-position))
+	(draw-row (nth 1 draw-position))
+	(copy-col (nth 0 copy-rect))
 	(copy-row (nth 1 copy-rect))
 	(copy-width (nth 2 copy-rect))
 	(copy-height (nth 3 copy-rect)))
-    
+    (ege:draw-text (rog:get-map-tiles-from-position (list copy-col copy-row) copy-width)
+		   draw-col
+		   draw-row)
     )
   )
 
 (message (rog:get-map-tiles-from-position '(2 2) 40))
+(rog:draw-map '(2 2) '(2 2 40 10))
