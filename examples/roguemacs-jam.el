@@ -85,20 +85,16 @@ From that position copies the characters up to COUNT."
 		 rog:player-pos-y)
 
   ;; Check if any key was pressend and move the player
-  (cond ((or (string= ege:key-pressed "s")
-	     (string= ege:key-pressed "<down>"))
+  (cond ((string= ege:key-pressed "<down>")
 	 (setq rog:player-pos-y
 	       (+ rog:player-pos-y 1)))
-	((or (string= ege:key-pressed "w")
-	     (string= ege:key-pressed "<up>"))
+	((string= ege:key-pressed "<up>")
 	 (setq rog:player-pos-y
 	       (- rog:player-pos-y 1))))
-  (cond ((or (string= ege:key-pressed "d")
-	     (string= ege:key-pressed "<right>"))
+  (cond ((string= ege:key-pressed "<right>")
 	 (setq rog:player-pos-x
 	       (+ rog:player-pos-x 1)))
-	((or (string= ege:key-pressed "a")
-	     (string= ege:key-pressed "<left>"))
+	((string= ege:key-pressed "<left>")
 	 (setq rog:player-pos-x
 	       (- rog:player-pos-x 1))))
 
