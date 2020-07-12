@@ -88,11 +88,17 @@ From that position copies the characters up to COUNT."
   )
 
 (defun rog:update-map ()
-  (rog:draw-map (list (nth 0 rog:map-viewport)
-		      (nth 1 rog:map-viewport))
-		(list 0 0
-		      (nth 2 rog:map-viewport)
-		      (nth 3 rog:map-viewport))))
+  (let ((viewport-center (rog:get-viewport-center)))
+    (message (concat "viewport-center: "
+		     (number-to-string (nth 0 viewport-center))
+		     ", "
+		     (number-to-string (nth 1 viewport-center))))
+							   
+    (rog:draw-map (list (- (nth 0 viewport-center) rog:player-pos-col)
+			(- (nth 1 viewport-center) rog:player-pos-row))
+		  (list 0 0
+			(nth 2 rog:map-viewport)
+			(nth 3 rog:map-viewport)))))
 
 (defun rog:can-player-move (col row)
   "Check if the COL and ROW are valid for the player to move."
@@ -118,13 +124,11 @@ adjusts the camera."
 	    ((not (= y-offset 0))
 	     (setq rog:camera-offset-y (+ rog:camera-offset-y y-offset))))
 
-      ;; Redraw the map using the camera offsets
-      (rog:draw-map (list (nth 0 rog:map-viewport)
-			  (nth 1 rog:map-viewport))
-		    (list rog:camera-offset-x
-			  rog:camera-offset-y
-			  (nth 2 rog:map-viewport)
-			  (nth 3 rog:map-viewport))))))
+      (rog:update-map))))
+
+(defun rog:get-viewport-center ()
+    (list (+ (nth 0 rog:map-viewport) (/ (nth 2 rog:map-viewport) 2))
+	  (+ (nth 1 rog:map-viewport) (/ (nth 3 rog:map-viewport) 2))))
 
 (defun rog:update()
   "Game update function."
@@ -139,11 +143,12 @@ adjusts the camera."
 	((string= ege:key-pressed "<left>")
 	 (rog:move-player -1 0)))
 
-  ;; Draw player 
-  (ege:draw-char "@"
-  		 (+ (nth 0 rog:map-viewport) (/ (nth 2 rog:map-viewport) 2))
-  		 (+ (nth 1 rog:map-viewport) (/ (nth 3 rog:map-viewport) 2))
-  		 '(:foreground "green"))
+  ;; Draw player
+  (let ((viewport-center (rog:get-viewport-center)))
+    (ege:draw-char "@"
+		   (nth 0 viewport-center)
+		   (nth 1 viewport-center)
+		   '(:foreground "green")))
 
   ;; Move the cursor away
   (coordinate-position-point-at 0 0)
