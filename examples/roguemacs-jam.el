@@ -12,6 +12,9 @@
 ;; Initialize the engine with the buffer name and number of cols and rows
 (ege:init "Example Game" 80 24)
 
+(defvar rog:map-dimensions '(80 21) "Dimensions of the map")
+(defvar rog:map-viewport '(4 3 40 15) "Rect viewport of the map")
+
 (defvar rog:map
 "################################################################################
 ################################################################################
@@ -36,14 +39,12 @@ ABCDE           #########           ###############################          ###
 ################################################################################"
 "Non-procedurally generated map.")
 
-(defvar map-dimensions '(80 21) "Dimensions of the map")
-
 (defun rog:get-map-tiles-from-position (position count)
   "Gets the tiles from the given map POSITION.
 From that position copies the characters up to COUNT."
   (let* ((col (nth 0 position))
 	 (row (nth 1 position))
-	 (index (+ (* row (car map-dimensions)) (+ col 1)))
+	 (index (+ (* row (car rog:map-dimensions)) (+ col 1)))
 	 (adjusted-index (+ index (- row 1))))
     (substring rog:map
 	       adjusted-index
@@ -69,5 +70,15 @@ From that position copies the characters up to COUNT."
     )
   )
 
+(ege:draw-border (- (nth 0 rog:map-viewport) 1)
+		 (- (nth 1 rog:map-viewport) 1)
+		 (+ (nth 2 rog:map-viewport) 2)
+		 (+ (nth 3 rog:map-viewport) 2)
+		 "x")
+
 (message (rog:get-map-tiles-from-position '(2 2) 40))
-(rog:draw-map '(2 2) '(2 2 40 10))
+(rog:draw-map (list (nth 0 rog:map-viewport)
+		    (nth 1 rog:map-viewport))
+	      (list 2 2
+		    (nth 2 rog:map-viewport)
+		    (nth 3 rog:map-viewport)))
