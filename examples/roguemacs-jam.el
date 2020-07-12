@@ -79,7 +79,7 @@ From that position copies the characters up to COUNT."
 
 (ege:draw-text " -= ROUGEMACS-JAM =- " 13 1
 	       '(:background "#4444FF" :foreground "#ffffff"))
-(ege:draw-text " Version 0.1- " 17 2
+(ege:draw-text " -Version 0.1- " 16 2
 	       '(:background "#2222AA" :foreground "#ffffff"))
 
 ;; Viewport border
@@ -108,12 +108,20 @@ From that position copies the characters up to COUNT."
 		"|AGI:" (number-to-string 1)
 		"|INT:" (number-to-string 1))
 	       54 7)
-(ege:draw-text (concat "Gold: " (number-to-string 88))
+(ege:draw-text (concat "Gold: " (number-to-string 0))
 	       54 8)
 
+(ege:draw-text "> You have awaken..."
+	       51 10)
+
+;; Draw the map
 (message (rog:get-map-tiles-from-position '(2 2) 40))
 (rog:draw-map (list (nth 0 rog:map-viewport)
 		    (nth 1 rog:map-viewport))
 	      (list 0 0
 		    (nth 2 rog:map-viewport)
 		    (nth 3 rog:map-viewport)))
+
+;; Draw player 
+(ege:draw-char "@" 8 8)
+
