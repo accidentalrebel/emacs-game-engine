@@ -69,6 +69,10 @@ From that position copies the characters up to COUNT."
   )
 
 (defun rog:draw-map (draw-position copy-rect)
+  "Draw the map according to the DRAW-POSITION and COPY-RECT.
+
+DRAW-POSITION (The position inside the canvas where it would be displayed.
+COPY-RECT (The rectangle where the characters inside the map that will be copied."
   (let ((draw-col (nth 0 draw-position))
 	(draw-row (nth 1 draw-position))
 	(copy-col (nth 0 copy-rect))
@@ -88,15 +92,30 @@ From that position copies the characters up to COUNT."
   )
 
 (defun rog:update-map ()
-  (let ((viewport-center (rog:get-viewport-center)))
-    (message (concat "viewport-center: "
-		     (number-to-string (nth 0 viewport-center))
-		     ", "
-		     (number-to-string (nth 1 viewport-center))))
-							   
-    (rog:draw-map (list (- (nth 0 viewport-center) rog:player-pos-col)
-			(- (nth 1 viewport-center) rog:player-pos-row))
-		  (list 0 0
+  "Update the drawing of the map based on the player's current position.
+
+Note that the map is the one that is being moved and the player just stays
+in the middle of the viewport.  This is the reason for the code below."
+  (let* ((viewport-center (rog:get-viewport-center))
+	 (map-viewport-col (nth 0 rog:map-viewport))
+	 (map-viewport-row (nth 1 rog:map-viewport))
+	 (draw-col (- (nth 0 viewport-center) rog:player-pos-col))
+	 (draw-row (- (nth 1 viewport-center) rog:player-pos-row))
+	 (copy-col-offset 0)
+	 (copy-row-offset 0))
+    
+    ;; If the computed drawing location is less than the viewport box
+    (when (< draw-col map-viewport-col)
+      (setq copy-col-offset (- map-viewport-col draw-col))
+      (setq draw-col map-viewport-col))
+
+    (when (< draw-row map-viewport-row)
+      (setq copy-row-offset (- map-viewport-row draw-row))
+      (setq draw-row map-viewport-row))
+    
+    (rog:draw-map (list draw-col draw-row)
+		  (list copy-col-offset
+			copy-row-offset
 			(nth 2 rog:map-viewport)
 			(nth 3 rog:map-viewport)))))
 
