@@ -14,8 +14,18 @@
 
 (defvar rog:map-dimensions '(80 25) "Dimensions of the map")
 (defvar rog:map-viewport '(4 5 40 15) "Rect viewport of the map")
-(defvar rog:player-pos-x 8)
-(defvar rog:player-pos-y 8)
+(defvar rog:player-pos-x 0)
+(defvar rog:player-pos-y 0)
+(defvar rog:camera-offset-x 0)
+(defvar rog:camera-offset-y 0)
+
+(setq rog:init-player-pos-x 4)
+(setq rog:init-player-pos-y 5)
+
+(setq rog:player-pos-x rog:init-player-pos-x)
+(setq rog:player-pos-y rog:init-player-pos-y)
+(setq rog:camera-offset-x 0)
+(setq rog:camera-offset-y 0)
 
 (defvar rog:map
   "                                                                                
@@ -68,7 +78,8 @@ From that position copies the characters up to COUNT."
 	(y-index 0))
     (while (< y-index copy-height)
       (message (number-to-string y-index))
-      (ege:draw-text (rog:get-map-tiles-from-position (list copy-col (+ copy-row y-index)) copy-width)
+      (ege:draw-text (rog:get-map-tiles-from-position (list copy-col
+							    (+ copy-row y-index)) copy-width)
 		     draw-col
 		     (+ draw-row y-index))
       (setq y-index (+ y-index 1))
@@ -78,44 +89,53 @@ From that position copies the characters up to COUNT."
 
 (defun rog:can-player-move (col row)
   "Check if the COL and ROW are valid for the player to move."
-  (not (string= (coordinate-get-char-at col row)					
+  (not (string= (rog:get-map-tiles-from-position (list col row) 1)
 		"#")))
 
-(defun rog:move-player (col row)
+(defun rog:move-player (x-offset y-offset)
   "Move the player to COL and ROW.
 
 It either moves the position of the player character or
 adjusts the camera."
-  (when (rog:can-player-move col row)
-    (setq rog:player-pos-x col)
-    (setq rog:player-pos-y row)))
+  (let ((col (+ rog:player-pos-x x-offset))
+	(row (+ rog:player-pos-y y-offset)))
+    (message (concat "Checking: " (number-to-string col) "," (number-to-string row)))
+    (when (rog:can-player-move col row)
+      (setq rog:player-pos-x col)
+      (setq rog:player-pos-y row)
+      (when (> x-offset 0)
+	(setq rog:camera-offset-x (+ rog:camera-offset-x x-offset))
+	(rog:draw-map (list (nth 0 rog:map-viewport)
+		    (nth 1 rog:map-viewport))
+	      (list rog:camera-offset-x 0
+		    (nth 2 rog:map-viewport)
+		    (nth 3 rog:map-viewport)))
+	)
+      )))
 
 (defun rog:update()
   "Game update function."
 
   ;; Erase the player character
-  (ege:draw-char "."
-		 rog:player-pos-x
-		 rog:player-pos-y)
+  ;; (ege:draw-char "."
+  ;; 		 rog:player-pos-x
+  ;; 		 rog:player-pos-y)
 
   ;; Check if any key was pressend and move the player
   (cond ((string= ege:key-pressed "<down>")
-	 (rog:move-player rog:player-pos-x
-			  (+ rog:player-pos-y 1)))
+	 (rog:move-player 0 1))
 	((string= ege:key-pressed "<up>")
-	 (rog:move-player rog:player-pos-x
-			  (- rog:player-pos-y 1))))
+	 (rog:move-player 0 -1)))
   (cond ((string= ege:key-pressed "<right>")
-	 (rog:move-player (+ rog:player-pos-x 1) rog:player-pos-y))
+	 (rog:move-player 1 0))
 	((string= ege:key-pressed "<left>")
-	 (rog:move-player (- rog:player-pos-x 1)
-			  rog:player-pos-y)))
+	 (rog:move-player -1 0)))
 
   ;; Draw player 
   (ege:draw-char "@"
-		 rog:player-pos-x
-		 rog:player-pos-y
-		 '(:foreground "green"))
+  		 (+ (nth 0 rog:map-viewport) rog:init-player-pos-x)
+  		 (+ (nth 1 rog:map-viewport) rog:init-player-pos-y)
+  		 '(:foreground "green"))
 
   ;; Move the cursor away
   (coordinate-position-point-at 0 0)
@@ -123,9 +143,6 @@ adjusts the camera."
 
 ;; INITIALIZATION
 ;; ==============
-
-(setq rog:player-pos-x 8)
-(setq rog:player-pos-y 8)
 
 ;; Draw background
 (ege:draw-rect 0 0 80 24 "-"
@@ -170,7 +187,6 @@ adjusts the camera."
 	       51 10)
 
 ;; Draw the map
-(message (rog:get-map-tiles-from-position '(2 2) 40))
 (rog:draw-map (list (nth 0 rog:map-viewport)
 		    (nth 1 rog:map-viewport))
 	      (list 0 0
