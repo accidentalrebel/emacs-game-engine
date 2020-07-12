@@ -119,6 +119,21 @@ in the middle of the viewport.  This is the reason for the code below."
 			copy-width-offset
 			copy-height-offset))))
 
+(defun rog:add-message (str)
+  "Add a message STR to the message queue UI.
+
+This reads the contents of the message queue and moves 
+the rectangle one row down.
+
+Then it adds the STR at the first line."
+  (when (ege:in-game-buffer-p)
+    (let ((inhibit-read-only t))
+      (coordinate-place-string-at-area 51 11 (coordinate-get-string-at-area 51 10 24 9))
+      (ege:draw-rect 51 10 24 1 " ")
+      (coordinate-place-string-at-area 51 10 str)
+      ))
+  )
+
 (defun rog:can-player-move (col row)
   "Check if the COL and ROW are valid for the player to move."
   (not (string= (rog:get-map-tiles-from-position (list col row) 1)
@@ -132,6 +147,16 @@ adjusts the camera."
   (let ((col (+ rog:player-pos-col x-offset))
 	(row (+ rog:player-pos-row y-offset)))
     (when (rog:can-player-move col row)
+
+      ;; Add a movement message
+      (cond ((> x-offset 0)
+	     (rog:add-message "> Moved east"))
+	    ((< x-offset 0)
+	     (rog:add-message "> Moved west"))
+	    ((> y-offset 0)
+	     (rog:add-message "> Moved south"))
+	    ((< y-offset 0)
+	     (rog:add-message "> Moved north")))
 
       ;; Update the player position
       (setq rog:player-pos-col col)
@@ -241,5 +266,7 @@ adjusts the camera."
 
   ;; Draw the map
   (rog:update-map)
+
+  (rog:add-message "> Moved NORTH")
 
   (ege:register-update 'rog:update 10))
