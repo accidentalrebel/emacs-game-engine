@@ -99,25 +99,36 @@ in the middle of the viewport.  This is the reason for the code below."
   (let* ((viewport-center (rog:get-viewport-center))
 	 (map-viewport-col (nth 0 rog:map-viewport))
 	 (map-viewport-row (nth 1 rog:map-viewport))
+	 (map-viewport-width (nth 2 rog:map-viewport))
+	 (map-viewport-height (nth 3 rog:map-viewport))
 	 (draw-col (- (nth 0 viewport-center) rog:player-pos-col))
 	 (draw-row (- (nth 1 viewport-center) rog:player-pos-row))
 	 (copy-col-offset 0)
-	 (copy-row-offset 0))
+	 (copy-row-offset 0)
+	 (copy-width-offset 0)
+	 (copy-height-offset 0))
     
-    ;; If the computed drawing location is less than the viewport box
+    ;; If the computed drawing location is less than the viewport column
     (when (< draw-col map-viewport-col)
       (setq copy-col-offset (- map-viewport-col draw-col))
       (setq draw-col map-viewport-col))
 
+    ;; If the computed drawing location is less than the viewport row
     (when (< draw-row map-viewport-row)
       (setq copy-row-offset (- map-viewport-row draw-row))
       (setq draw-row map-viewport-row))
-    
+
+    (when (>= draw-col map-viewport-col)
+      (setq copy-width-offset (- (+ map-viewport-col map-viewport-width) draw-col)))
+
+    (when (>= draw-row map-viewport-row)
+      (setq copy-height-offset (- (+ map-viewport-row map-viewport-height) draw-row)))
+
     (rog:draw-map (list draw-col draw-row)
 		  (list copy-col-offset
 			copy-row-offset
-			(nth 2 rog:map-viewport)
-			(nth 3 rog:map-viewport)))))
+			copy-width-offset
+			copy-height-offset))))
 
 (defun rog:can-player-move (col row)
   "Check if the COL and ROW are valid for the player to move."
