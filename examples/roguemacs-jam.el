@@ -93,40 +93,36 @@ From that position copies the characters up to COUNT."
 		"#")))
 
 (defun rog:move-player (x-offset y-offset)
-  "Move the player to COL and ROW.
+  "Move the player by X-OFFSET and Y-OFFSET.
 
 It either moves the position of the player character or
 adjusts the camera."
   (let ((col (+ rog:player-pos-x x-offset))
 	(row (+ rog:player-pos-y y-offset)))
-    (message (concat "Checking: " (number-to-string col) "," (number-to-string row)))
     (when (rog:can-player-move col row)
+
+      ;; Update the player position
       (setq rog:player-pos-x col)
       (setq rog:player-pos-y row)
+
+      ;; Move the camera offsets
       (cond ((not (= x-offset 0))
 	     (setq rog:camera-offset-x (+ rog:camera-offset-x x-offset)))
 	    ((not (= y-offset 0))
 	     (setq rog:camera-offset-y (+ rog:camera-offset-y y-offset))))
 
-      (message (concat "Drawing map at: " (number-to-string rog:camera-offset-x) "," (number-to-string rog:camera-offset-y)))
+      ;; Redraw the map using the camera offsets
       (rog:draw-map (list (nth 0 rog:map-viewport)
 			  (nth 1 rog:map-viewport))
 		    (list rog:camera-offset-x
 			  rog:camera-offset-y
 			  (nth 2 rog:map-viewport)
-			  (nth 3 rog:map-viewport)))
-      )
-      ))
+			  (nth 3 rog:map-viewport))))))
 
 (defun rog:update()
   "Game update function."
 
-  ;; Erase the player character
-  ;; (ege:draw-char "."
-  ;; 		 rog:player-pos-x
-  ;; 		 rog:player-pos-y)
-
-  ;; Check if any key was pressend and move the player
+  ;; Check if any key was pressed and move the player
   (cond ((string= ege:key-pressed "<down>")
 	 (rog:move-player 0 1))
 	((string= ege:key-pressed "<up>")
