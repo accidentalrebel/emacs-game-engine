@@ -77,8 +77,18 @@ From that position copies the characters up to COUNT."
   )
 
 (defun rog:can-player-move (col row)
+  "Check if the COL and ROW are valid for the player to move."
   (not (string= (coordinate-get-char-at col row)					
 		"#")))
+
+(defun rog:move-player (col row)
+  "Move the player to COL and ROW.
+
+It either moves the position of the player character or
+adjusts the camera."
+  (when (rog:can-player-move col row)
+    (setq rog:player-pos-x col)
+    (setq rog:player-pos-y row)))
 
 (defun rog:update()
   "Game update function."
@@ -89,26 +99,17 @@ From that position copies the characters up to COUNT."
 		 rog:player-pos-y)
 
   ;; Check if any key was pressend and move the player
-  (cond ((and (string= ege:key-pressed "<down>")
-	      (rog:can-player-move rog:player-pos-x
-				   (+ rog:player-pos-y 1)))
-	 (setq rog:player-pos-y
-	       (+ rog:player-pos-y 1)))
-	((and (string= ege:key-pressed "<up>")
-	      (rog:can-player-move rog:player-pos-x
-				   (- rog:player-pos-y 1)))
-	 (setq rog:player-pos-y
-	       (- rog:player-pos-y 1))))
-  (cond ((and (string= ege:key-pressed "<right>")
-	      (rog:can-player-move (+ rog:player-pos-x 1)
-				   rog:player-pos-y))
-	 (setq rog:player-pos-x
-	       (+ rog:player-pos-x 1)))
-	((and (string= ege:key-pressed "<left>")
-	      (rog:can-player-move (- rog:player-pos-x 1)
-				   rog:player-pos-y))
-	 (setq rog:player-pos-x
-	       (- rog:player-pos-x 1))))
+  (cond ((string= ege:key-pressed "<down>")
+	 (rog:move-player rog:player-pos-x
+			  (+ rog:player-pos-y 1)))
+	((string= ege:key-pressed "<up>")
+	 (rog:move-player rog:player-pos-x
+			  (- rog:player-pos-y 1))))
+  (cond ((string= ege:key-pressed "<right>")
+	 (rog:move-player (+ rog:player-pos-x 1) rog:player-pos-y))
+	((string= ege:key-pressed "<left>")
+	 (rog:move-player (- rog:player-pos-x 1)
+			  rog:player-pos-y)))
 
   ;; Draw player 
   (ege:draw-char "@"
