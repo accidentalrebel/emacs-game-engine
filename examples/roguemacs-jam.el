@@ -1,4 +1,4 @@
-;;; rougemacs-jam.el --- Roguelike example game for Emacs Game engine    -*- lexical-binding: t -*-
+;;; roguemacs-jam.el --- Roguelike example game for Emacs Game engine    -*- lexical-binding: t -*-
 
 ;;; Commentary:
 ;; Roguemacs-Jam is a roguelike example game for Emacs Game engine.
@@ -14,16 +14,16 @@
 
 (defvar rog:map-dimensions '(80 25) "Dimensions of the map")
 (defvar rog:map-viewport '(4 5 40 15) "Rect viewport of the map")
-(defvar rog:player-pos-x 0)
-(defvar rog:player-pos-y 0)
+(defvar rog:player-pos-col 0)
+(defvar rog:player-pos-row 0)
 (defvar rog:camera-offset-x 0)
 (defvar rog:camera-offset-y 0)
 
-(setq rog:init-player-pos-x 4)
-(setq rog:init-player-pos-y 5)
+(setq rog:init-player-pos-col 4)
+(setq rog:init-player-pos-row 5)
 
-(setq rog:player-pos-x rog:init-player-pos-x)
-(setq rog:player-pos-y rog:init-player-pos-y)
+(setq rog:player-pos-col rog:init-player-pos-col)
+(setq rog:player-pos-row rog:init-player-pos-row)
 (setq rog:camera-offset-x 0)
 (setq rog:camera-offset-y 0)
 
@@ -77,15 +77,22 @@ From that position copies the characters up to COUNT."
 	(copy-height (nth 3 copy-rect))
 	(y-index 0))
     (while (< y-index copy-height)
-      (message (number-to-string y-index))
       (ege:draw-text (rog:get-map-tiles-from-position (list copy-col
-							    (+ copy-row y-index)) copy-width)
+							    (+ copy-row y-index))
+						      copy-width)
 		     draw-col
 		     (+ draw-row y-index))
       (setq y-index (+ y-index 1))
       )
     )
   )
+
+(defun rog:update-map ()
+  (rog:draw-map (list (nth 0 rog:map-viewport)
+		      (nth 1 rog:map-viewport))
+		(list 0 0
+		      (nth 2 rog:map-viewport)
+		      (nth 3 rog:map-viewport))))
 
 (defun rog:can-player-move (col row)
   "Check if the COL and ROW are valid for the player to move."
@@ -97,13 +104,13 @@ From that position copies the characters up to COUNT."
 
 It either moves the position of the player character or
 adjusts the camera."
-  (let ((col (+ rog:player-pos-x x-offset))
-	(row (+ rog:player-pos-y y-offset)))
+  (let ((col (+ rog:player-pos-col x-offset))
+	(row (+ rog:player-pos-row y-offset)))
     (when (rog:can-player-move col row)
 
       ;; Update the player position
-      (setq rog:player-pos-x col)
-      (setq rog:player-pos-y row)
+      (setq rog:player-pos-col col)
+      (setq rog:player-pos-row row)
 
       ;; Move the camera offsets
       (cond ((not (= x-offset 0))
@@ -134,8 +141,8 @@ adjusts the camera."
 
   ;; Draw player 
   (ege:draw-char "@"
-  		 (+ (nth 0 rog:map-viewport) rog:init-player-pos-x)
-  		 (+ (nth 1 rog:map-viewport) rog:init-player-pos-y)
+  		 (+ (nth 0 rog:map-viewport) (/ (nth 2 rog:map-viewport) 2))
+  		 (+ (nth 1 rog:map-viewport) (/ (nth 3 rog:map-viewport) 2))
   		 '(:foreground "green"))
 
   ;; Move the cursor away
@@ -149,7 +156,7 @@ adjusts the camera."
 (ege:draw-rect 0 0 80 24 "-"
 	       '(:background "#11" :foreground "#666"))
 
-(ege:draw-text " -= ROUGEMACS-JAM =- " 13 1
+(ege:draw-text " -= ROGUEMACS-JAM =- " 13 1
 	       '(:background "#4444FF" :foreground "#ffffff"))
 (ege:draw-text " -Version 0.1- " 16 2
 	       '(:background "#2222AA" :foreground "#ffffff"))
@@ -188,10 +195,6 @@ adjusts the camera."
 	       51 10)
 
 ;; Draw the map
-(rog:draw-map (list (nth 0 rog:map-viewport)
-		    (nth 1 rog:map-viewport))
-	      (list 0 0
-		    (nth 2 rog:map-viewport)
-		    (nth 3 rog:map-viewport)))
+(rog:update-map)
 
 (ege:register-update 'rog:update 10)
