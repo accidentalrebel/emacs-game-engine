@@ -108,7 +108,7 @@ FPS the frames per second."
 Can accept a multiline string.
 
 This is a wrapper function to the coordinate.el function."
-  (when (in-game-buffer-p)
+  (when (ege:in-game-buffer-p)
     (let ((inhibit-read-only t))
       (coordinate-place-string-at-area col row str attributes))))
 
@@ -119,7 +119,7 @@ CHAR is the character to place.
 Coordinates use a starting index of 0.
 
 This is a wrapper function to the coordinate.el function."
-  (when (in-game-buffer-p)
+  (when (ege:in-game-buffer-p)
     (let ((inhibit-read-only t))
       (coordinate-place-char-at col row char attributes))))
 
