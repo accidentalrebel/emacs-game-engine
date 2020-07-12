@@ -28,7 +28,7 @@
 (setq rog:camera-offset-y 0)
 
 (defvar rog:map
-  "                                                                                
+"                                                                                
                                                                                 
   ###############       #############                             ############  
   #.............#####   #...........#  ############ ############# #..........#  
@@ -41,8 +41,8 @@
   #......#    #.........#####.#######...........#     #.........# #..........#  
   #......#    #.................................#####################.########  
   #......#    #.........######################### #...................#         
-  ########    ###########                         #.#####.###########.#####
-                                                  #.#   #.#         #.#   #
+  ########    ###########                         #.#####.###########.#####     
+                                                  #.#   #.#         #.#   #     
     ###############################################.#####.###    ####.#####     
     #...............................................#.......#    #........#     
     #.###############################################.......#    #........#     
@@ -103,15 +103,20 @@ adjusts the camera."
     (when (rog:can-player-move col row)
       (setq rog:player-pos-x col)
       (setq rog:player-pos-y row)
-      (when (> x-offset 0)
-	(setq rog:camera-offset-x (+ rog:camera-offset-x x-offset))
-	(rog:draw-map (list (nth 0 rog:map-viewport)
-		    (nth 1 rog:map-viewport))
-	      (list rog:camera-offset-x 0
-		    (nth 2 rog:map-viewport)
-		    (nth 3 rog:map-viewport)))
-	)
-      )))
+      (cond ((not (= x-offset 0))
+	     (setq rog:camera-offset-x (+ rog:camera-offset-x x-offset)))
+	    ((not (= y-offset 0))
+	     (setq rog:camera-offset-y (+ rog:camera-offset-y y-offset))))
+
+      (message (concat "Drawing map at: " (number-to-string rog:camera-offset-x) "," (number-to-string rog:camera-offset-y)))
+      (rog:draw-map (list (nth 0 rog:map-viewport)
+			  (nth 1 rog:map-viewport))
+		    (list rog:camera-offset-x
+			  rog:camera-offset-y
+			  (nth 2 rog:map-viewport)
+			  (nth 3 rog:map-viewport)))
+      )
+      ))
 
 (defun rog:update()
   "Game update function."
