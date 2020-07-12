@@ -74,11 +74,42 @@ From that position copies the characters up to COUNT."
     )
   )
 
+(ege:draw-rect 0 0 80 24 "-"
+	       '(:background "#11" :foreground "#666"))
+
+(ege:draw-text " -= ROUGEMACS-JAM =- " 13 1
+	       '(:background "#4444FF" :foreground "#ffffff"))
+(ege:draw-text " Version 0.1- " 17 2
+	       '(:background "#2222AA" :foreground "#ffffff"))
+
+;; Viewport border
 (ege:draw-border (- (nth 0 rog:map-viewport) 1)
 		 (- (nth 1 rog:map-viewport) 1)
 		 (+ (nth 2 rog:map-viewport) 2)
 		 (+ (nth 3 rog:map-viewport) 2)
-		 "x")
+		 "="
+		 '(:background "#222266" :foreground "#8888AA"))
+
+;; Message border
+(ege:draw-rect 50 9 26 12 " ")
+(ege:draw-border 50 9 26 12 "="
+		 '(:background "#222266" :foreground "#8888AA"))
+
+;; Player border
+(ege:draw-rect 52 4 22 6 " ")
+(ege:draw-border 52 4 22 6 "="
+		 '(:background "#222266" :foreground "#8888AA"))
+
+(ege:draw-text "Player name" 54 5)
+(ege:draw-text (concat "Level: " (number-to-string 1))
+	       54 6)
+(ege:draw-text (concat
+		"STR:" (number-to-string 1)
+		"|AGI:" (number-to-string 1)
+		"|INT:" (number-to-string 1))
+	       54 7)
+(ege:draw-text (concat "Gold: " (number-to-string 88))
+	       54 8)
 
 (message (rog:get-map-tiles-from-position '(2 2) 40))
 (rog:draw-map (list (nth 0 rog:map-viewport)
