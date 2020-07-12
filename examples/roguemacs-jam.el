@@ -9,23 +9,12 @@
 
 (require 'emacs-game-engine)
 
-;; Initialize the engine with the buffer name and number of cols and rows
-(ege:init "Example Game" 80 24)
-
 (defvar rog:map-dimensions '(80 25) "Dimensions of the map")
 (defvar rog:map-viewport '(4 5 40 15) "Rect viewport of the map")
 (defvar rog:player-pos-col 0)
 (defvar rog:player-pos-row 0)
 (defvar rog:camera-offset-x 0)
 (defvar rog:camera-offset-y 0)
-
-(setq rog:init-player-pos-col 4)
-(setq rog:init-player-pos-row 5)
-
-(setq rog:player-pos-col rog:init-player-pos-col)
-(setq rog:player-pos-row rog:init-player-pos-row)
-(setq rog:camera-offset-x 0)
-(setq rog:camera-offset-y 0)
 
 (defvar rog:map
 "                                                                                
@@ -184,61 +173,73 @@ adjusts the camera."
   (coordinate-position-point-at 0 0)
   )
 
-;; INITIALIZATION
-;; ==============
+(defun roguemacs-start ()
+  "Start the game."
+  (interactive)
 
-;; Draw background
-(ege:draw-rect 0 0 80 24 "-"
-	       '(:background "#11" :foreground "#666"))
+  ;; Initialize the engine with the buffer name and number of cols and rows
+  (ege:init "Example Game" 80 24)
+  
+  (setq rog:init-player-pos-col 4)
+  (setq rog:init-player-pos-row 5)
 
-(ege:draw-text " -= ROGUEMACS-JAM =- " 13 1
-	       '(:background "#4444FF" :foreground "#ffffff"))
-(ege:draw-text " -Version 0.1- " 16 2
-	       '(:background "#2222AA" :foreground "#ffffff"))
+  (setq rog:player-pos-col rog:init-player-pos-col)
+  (setq rog:player-pos-row rog:init-player-pos-row)
+  (setq rog:camera-offset-x 0)
+  (setq rog:camera-offset-y 0)
 
-;; Draw viewport background and border
-(let ((map-viewport-col (nth 0 rog:map-viewport))
-      (map-viewport-row (nth 1 rog:map-viewport))
-      (map-viewport-width (nth 2 rog:map-viewport))
-      (map-viewport-height (nth 3 rog:map-viewport)))
-      (ege:draw-border (- map-viewport-col 1)
-		       (- map-viewport-row 1)
-		       (+ map-viewport-width 2)
-		       (+ map-viewport-height 2)
-		       "="
-		       '(:background "#222266" :foreground "#8888AA"))
-      (ege:draw-rect map-viewport-col
-		     map-viewport-row
-		     map-viewport-width
-		     map-viewport-height
-		     " "))
+  ;; Draw background
+  (ege:draw-rect 0 0 80 24 "-"
+		 '(:background "#11" :foreground "#666"))
 
-;; Draw player details and border
-(ege:draw-rect 52 4 22 6 " ")
-(ege:draw-border 52 4 22 6 "="
-		 '(:background "#222266" :foreground "#8888AA"))
+  (ege:draw-text " -= ROGUEMACS-JAM =- " 13 1
+		 '(:background "#4444FF" :foreground "#ffffff"))
+  (ege:draw-text " -Version 0.1- " 16 2
+		 '(:background "#2222AA" :foreground "#ffffff"))
 
-(ege:draw-text "Player name" 54 5)
-(ege:draw-text (concat "Level: " (number-to-string 1))
-	       54 6)
-(ege:draw-text (concat
-		"STR:" (number-to-string 1)
-		"|AGI:" (number-to-string 1)
-		"|INT:" (number-to-string 1))
-	       54 7)
-(ege:draw-text (concat "Gold: " (number-to-string 0))
-	       54 8)
+  ;; Draw viewport background and border
+  (let ((map-viewport-col (nth 0 rog:map-viewport))
+	(map-viewport-row (nth 1 rog:map-viewport))
+	(map-viewport-width (nth 2 rog:map-viewport))
+	(map-viewport-height (nth 3 rog:map-viewport)))
+    (ege:draw-border (- map-viewport-col 1)
+		     (- map-viewport-row 1)
+		     (+ map-viewport-width 2)
+		     (+ map-viewport-height 2)
+		     "="
+		     '(:background "#222266" :foreground "#8888AA"))
+    (ege:draw-rect map-viewport-col
+		   map-viewport-row
+		   map-viewport-width
+		   map-viewport-height
+		   " "))
 
-;; Draw messaging border
-(ege:draw-rect 50 9 26 12 " ")
-(ege:draw-border 50 9 26 12 "="
-		 '(:background "#222266" :foreground "#8888AA"))
+  ;; Draw player details and border
+  (ege:draw-rect 52 4 22 6 " ")
+  (ege:draw-border 52 4 22 6 "="
+		   '(:background "#222266" :foreground "#8888AA"))
 
-;; Draw messaging sample text
-(ege:draw-text "> You have awaken..."
-	       51 10)
+  (ege:draw-text "Player name" 54 5)
+  (ege:draw-text (concat "Level: " (number-to-string 1))
+		 54 6)
+  (ege:draw-text (concat
+		  "STR:" (number-to-string 1)
+		  "|AGI:" (number-to-string 1)
+		  "|INT:" (number-to-string 1))
+		 54 7)
+  (ege:draw-text (concat "Gold: " (number-to-string 0))
+		 54 8)
 
-;; Draw the map
-(rog:update-map)
+  ;; Draw messaging border
+  (ege:draw-rect 50 9 26 12 " ")
+  (ege:draw-border 50 9 26 12 "="
+		   '(:background "#222266" :foreground "#8888AA"))
 
-(ege:register-update 'rog:update 10)
+  ;; Draw messaging sample text
+  (ege:draw-text "> You have awaken..."
+		 51 10)
+
+  ;; Draw the map
+  (rog:update-map)
+
+  (ege:register-update 'rog:update 10))

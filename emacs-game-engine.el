@@ -62,7 +62,8 @@ ROWS is the number of rows (in characters)"
   (setq ege:buffer-cols cols)
   (setq ege:buffer-rows rows)
 
-  (select-window (nth 1 (window-list)))
+  (when (> (length (window-list)) 1)
+    (select-window (nth 1 (window-list))))
   (switch-to-buffer ege:buffer-name)
   (ege:ege-mode)
   (ege:mouse-init)
