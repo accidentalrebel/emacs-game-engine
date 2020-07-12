@@ -10,13 +10,13 @@
 (require 'emacs-game-engine)
 
 ;; Initialize the engine with the buffer name and number of cols and rows
-(ege:init "Example Game" 80 24)
+;; (ege:init "Example Game" 80 24)
 
 
 (defvar rog:map
 "################################################################################
 ################################################################################
-###             #########           ###############################          ###
+ABCDE           #########           ###############################          ###
 ###                  ####           ####           ##           ###          ###
 ###             ###  ####           ####           ##                        ###
 ###             ###  ####           ####                        ###          ###
@@ -28,11 +28,17 @@
 ################################################################################"
 "Non-procedurally generated map.")
 
-(defun rog:get-tile-value-at-position (position)
-  (let ((col (nth 0 copy-rect))
-	(row (nth 1 copy-rect))
-
-	)
+(defun rog:get-map-tiles-from-position (position count)
+  "Gets the tiles from the given map POSITION.
+From that position copies the characters up to COUNT."
+  (let* ((col (nth 0 position))
+	 (row (nth 1 position))
+	 (index (+ (* row 80) (+ col 1)))
+	 (adjusted-index (+ index (- row 1))))
+    (substring rog:map
+	       adjusted-index
+	       (+ adjusted-index count))
+    )
   )
 
 (defun rog:draw-map (draw-position copy-rect)
@@ -43,3 +49,5 @@
     
     )
   )
+
+(message (rog:get-map-tiles-from-position '(2 2) 40))
