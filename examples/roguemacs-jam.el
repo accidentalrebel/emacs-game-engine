@@ -196,13 +196,22 @@ adjusts the camera."
 (ege:draw-text " -Version 0.1- " 16 2
 	       '(:background "#2222AA" :foreground "#ffffff"))
 
-;; Draw viewport border
-(ege:draw-border (- (nth 0 rog:map-viewport) 1)
-		 (- (nth 1 rog:map-viewport) 1)
-		 (+ (nth 2 rog:map-viewport) 2)
-		 (+ (nth 3 rog:map-viewport) 2)
-		 "="
-		 '(:background "#222266" :foreground "#8888AA"))
+;; Draw viewport background and border
+(let ((map-viewport-col (nth 0 rog:map-viewport))
+      (map-viewport-row (nth 1 rog:map-viewport))
+      (map-viewport-width (nth 2 rog:map-viewport))
+      (map-viewport-height (nth 3 rog:map-viewport)))
+      (ege:draw-border (- map-viewport-col 1)
+		       (- map-viewport-row 1)
+		       (+ map-viewport-width 2)
+		       (+ map-viewport-height 2)
+		       "="
+		       '(:background "#222266" :foreground "#8888AA"))
+      (ege:draw-rect map-viewport-col
+		     map-viewport-row
+		     map-viewport-width
+		     map-viewport-height
+		     " "))
 
 ;; Draw player details and border
 (ege:draw-rect 52 4 22 6 " ")
