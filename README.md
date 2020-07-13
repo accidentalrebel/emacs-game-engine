@@ -3,6 +3,22 @@ A minimal game engine for making games on and for Emacs.
 
 This is my entry for the [Lisp Jam](https://handmade.network/blogs/p/7390-%5Bnews%5D_lisp_jam,_hms_2020,_showcase_streams,_podcast_episodes#23034) at the Handmade Network Discord.
 
+![preview-1](assets/preview.png)
+
+Watch the video [here](https://youtu.be/yuBNyhwqdWQ).
+
+## Features 
+The engine offers functions that allows the following features
+- [x] Buffer management
+- [x] Draw canvas setup
+- [x] Basic text-based drawing functions
+- [x] Keyboard input 
+- [x] Mouse input
+- [x] Audio output (Audio playing via external programs)
+
+## Why?
+I [made a couple](https://github.com/accidentalrebel/emacs-tic-tac-toe-improved) of [games for emacs](https://github.com/accidentalrebel/emacs-dice-kingdoms). I had a lot of fun making those so I wanted to make a game engine that would allow me to make more.
+
 ## Sample Code
 A simple example program that detects keyboard movement and moves a player on the screen
 
@@ -63,23 +79,13 @@ A simple example program that detects keyboard movement and moves a player on th
 (ege:register-update 'update 24)
 ```
 
-There are more code examples in the [examples folder](https://github.com/accidentalrebel/emacs-game-engine/tree/master/examples).
-
-## Roadmap
-
-v0.1
-- [x] Canvas setup
-- [x] Basic drawing functions
-- [x] Keyboard input
-- [ ] Mouse input
-- [ ] Audio output
-- [ ] Saving/Loading
-
-v0.2
-- [ ] Improved keyboard input
-- [ ] Animations
-- [ ] Tweening
+There are more code examples in the [examples folder](https://github.com/accidentalrebel/emacs-game-engine/tree/master/examples). To run the examples, open the `.el` file and run the `eval-bufer` emacs command. Additionally, for the `roguemacs-jam.el` example, you also need to run the `roguemacs-start` command.
 
 ## Dependencies
 
 * [coordinate.el](https://github.com/accidentalrebel/coordinate.el) - A separate emacs library I made that provides convenience functions for editing buffers through col and row coondinates
+
+## Next steps
+
+* I want to update the API so they are consistent with each other
+* I also plan to finish the `roguemacs-jam.el` example project so that it has a gameplay rather than just being able to move around

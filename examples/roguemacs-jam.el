@@ -267,6 +267,4 @@ adjusts the camera."
   ;; Draw the map
   (rog:update-map)
 
-  (rog:add-message "> Moved NORTH")
-
   (ege:register-update 'rog:update 10))
