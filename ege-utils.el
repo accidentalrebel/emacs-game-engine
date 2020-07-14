@@ -28,5 +28,26 @@ Pressed mouse button is compared to MOUSE-BUTTON-NUMBER."
        (ege:coordinate-in-rect-p (ege:mouse-position)
 				 rect)))
 
+(defun ege:place-string-at-area (col row str &optional attributes)
+  "Places at COL and ROW a given STR.
+&optional ATTRIBUTES is the face attribute to use for the string.
+Can accept a multiline string.
+
+This is a wrapper function to the coordinate.el function."
+  (when (ege:in-game-buffer-p)
+    (let ((inhibit-read-only t))
+      (coordinate-place-string-at-area col row str attributes))))
+
+(defun ege:place-char-at (col row char &optional attributes)
+  "Place char at COL and ROW coordinates.
+CHAR is the character to place.
+&optional ATTRIBUTES is the face attribute to use for the character.
+Coordinates use a starting index of 0.
+
+This is a wrapper function to the coordinate.el function."
+  (when (ege:in-game-buffer-p)
+    (let ((inhibit-read-only t))
+      (coordinate-place-char-at col row char attributes))))
+
 (provide 'ege-utils)
 ;;; ege-utils.el ends here
