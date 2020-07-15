@@ -47,14 +47,29 @@
 (defun rog:get-map-tiles-from-position (position count)
   "Gets the tiles from the given map POSITION.
 From that position copies the characters up to COUNT."
-  (let* ((col (nth 0 position))
-	 (row (nth 1 position))
-	 (index (+ (* row (car rog:map-dimensions)) (+ col 1)))
-	 (adjusted-index (+ index (- row 1))))
-    (substring rog:map
-	       adjusted-index
-	       (+ adjusted-index count))
-    )
+  (when (and (< (nth 0 position) (nth 0 rog:map-dimensions))
+	     (< (nth 1 position) (nth 1 rog:map-dimensions)))
+    
+    (let* ((col (nth 0 position))
+	   (row (nth 1 position))
+	   (index (+ (* row (car rog:map-dimensions)) (+ col 1)))
+	   (adjusted-index (+ index (- row 1)))
+	   (adjusted-index+count (+ adjusted-index count)))
+
+      (when (>= adjusted-index+count (length rog:map))
+	(setq adjusted-index+count (length rog:map)))
+
+      (message (concat "Getting substring: "
+		       (number-to-string col) ","
+		       (number-to-string row) " - "
+		       (number-to-string adjusted-index) ","
+		       (number-to-string adjusted-index+count) " ? "
+		       (number-to-string (length rog:map))))
+      
+      (substring rog:map
+		 adjusted-index
+		 adjusted-index+count)
+      ))
   )
 
 (defun rog:draw-map (draw-position copy-rect)
@@ -136,8 +151,10 @@ Then it adds the STR at the first line."
 
 (defun rog:can-player-move (col row)
   "Check if the COL and ROW are valid for the player to move."
-  (not (string= (rog:get-map-tiles-from-position (list col row) 1)
-		"#")))
+  (let ((map-tiles-from-position (rog:get-map-tiles-from-position (list col row) 1)))
+    (when map-tiles-from-position
+      (not (string= map-tiles-from-position
+		    "#")))))
 
 (defun rog:move-player (x-offset y-offset)
   "Move the player by X-OFFSET and Y-OFFSET.

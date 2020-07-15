@@ -69,7 +69,8 @@ Displays CHAR with optional ATTRIBUTES."
 
 (defun ege:draw-text(str col row &optional attributes)
   "Draws the STR at COL and ROW with optional ATTRIBUTES."
-  (when (ege:in-game-buffer-p)
+  (when (and (ege:in-game-buffer-p)
+	     str)
     (let ((inhibit-read-only t))
       (coordinate-place-string-at-area col row str attributes))))
 
