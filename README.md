@@ -83,9 +83,4 @@ There are more code examples in the [examples folder](https://github.com/acciden
 
 ## Dependencies
 
-* [coordinate.el](https://github.com/accidentalrebel/coordinate.el) - A separate emacs library I made that provides convenience functions for editing buffers through col and row coondinates
-
-## Next steps
-
-* I want to update the API so they are consistent with each other
-* I also plan to finish the `roguemacs-jam.el` example project so that it has a gameplay rather than just being able to move around
+* [coordinate.el](https://github.com/accidentalrebel/coordinate.el) - A separate emacs library I made that provides convenience functions for editing buffers through col and row coondinates.
